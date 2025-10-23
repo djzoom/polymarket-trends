@@ -1,5 +1,5 @@
 async function fetchMarkets() {
-  const res = await fetch("https://gamma-api.polymarket.com/markets");
+  const res = await fetch("https://corsproxy.io/https://gamma-api.polymarket.com/markets?closed=false&limit=100&order=id&ascending=false");
   const json = await res.json();
   return json.data
     .filter(m => m.volume && m.question)
