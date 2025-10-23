@@ -1,44 +1,45 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Polymarket 热度指数趋势</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Polymarket 热度指数趋势</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <header>
-    <h1>📈 Polymarket 热搜指数</h1>
-    <p>实时追踪预测市场热度与概率变化</p>
-  </header>
-
-  <main>
-    <section id="summary">
-      <h2>今日趋势摘要</h2>
-      <p id="summary-text">加载中...</p>
-    </section>
-
-    <section id="top-markets">
-      <h2>今日热门预测</h2>
-      <table id="market-table">
-        <thead>
-          <tr><th>#</th><th>事件</th><th>Yes概率</th><th>成交量</th><th>变化指数</th></tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </section>
-
-    <section id="chart">
-      <h2>热度指数变化图</h2>
-      <canvas id="trendChart"></canvas>
-    </section>
-  </main>
-
-  <footer>
-    <p>数据来源：<a href="https://polymarket.com/" target="_blank">Polymarket</a> ｜ 作者：Zhong Wang</p>
-  </footer>
-
-  <script src="script.js"></script>
+<header>
+  <h1>📈 Polymarket 热搜指数</h1>
+  <p>实时追踪预测市场热度与概率变化</p>
+</header>
+<main>
+  <section id="summary">
+    <h2>今日趋势摘要</h2>
+    <p id="summary-text">加载中...</p>
+  </section>
+  <section id="top-markets">
+    <h2>今日热门预测</h2>
+    <table id="market-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>事件</th>
+          <th>Yes概率</th>
+          <th>成交量</th>
+          <th>变化指数</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
+  <section id="chart">
+    <h2>热度指数变化图</h2>
+    <canvas id="trendChart"></canvas>
+  </section>
+</main>
+<footer>
+  <p>数据来源：<a href="https://polymarket.com/" target="_blank">Polymarket</a>｜ 作者：Zhong Wang</p>
+</footer>
+<script src="main.js"></script>
 </body>
 </html>
