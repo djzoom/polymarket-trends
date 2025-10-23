@@ -1,17 +1,35 @@
 async function fetchMarkets() {
   const res = await fetch("https://corsproxy.io/https://gamma-api.polymarket.com/markets?closed=false&limit=100&order=id&ascending=false");
   const json = await res.json();
-  return json.data
+  // Determine if API returns an object with .data or an array
+  const marketsData = Array.isArray(json) ? json : (json.data || []);
+  return marketsData
     .filter(m => m.volume && m.question)
-    .map(m => ({
-      question: m.question,
-      yes: m.outcomes?.[0]?.price || 0,
-      volume: parseFloat(m.volume),
-      slug: m.slug
-    }))
+    .map(m => {
+      // Extract the YES price; try outcomePrices array first, then fallback to outcomes price
+      let yesPrice = 0;
+      if (m.outcomePrices) {
+        try {
+          const prices = JSON.parse(m.outcomePrices);
+          yesPrice = parseFloat(prices[0]);
+        } catch (e) {
+          yesPrice = 0;
+        }
+      } else if (m.outcomes && m.outcomes[0] && typeof m.outcomes[0].price === 'number') {
+        yesPrice = m.outcomes[0].price;
+      }
+      const volume = parseFloat(m.volume || m.volumeNum || 0);
+      return {
+        question: m.question,
+        yes: yesPrice,
+        volume: volume,
+        slug: m.slug
+      };
+    })
     .sort((a, b) => b.volume - a.volume)
     .slice(0, 10);
 }
+
 async function render() {
   const markets = await fetchMarkets();
   const tbody = document.querySelector("#market-table tbody");
@@ -33,6 +51,7 @@ async function render() {
   document.querySelector("#summary-text").textContent = `前10市场平均“YES”概率为 ${avgYes}%，显示市场整体${avgYes > 50 ? '偏乐观' : '偏谨慎'}。`;
   renderChart(markets);
 }
+
 function renderChart(markets) {
   const ctx = document.getElementById("trendChart");
   const labels = markets.map(m => m.question.slice(0, 25) + "...");
@@ -56,5 +75,7 @@ function renderChart(markets) {
     }
   });
 }
+
 render();
+// Refresh every 10 minutes
 setInterval(render, 600000);
