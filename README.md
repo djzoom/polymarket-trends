@@ -29,7 +29,6 @@ Open [http://localhost:8080](http://localhost:8080).
 - `index.html`: page layout and controls
 - `main.js`: unified data pipeline + rendering logic
 - `style.css`: dashboard visual system
-- `script.js`: deprecated compatibility entry
 
 ## Notes
 
