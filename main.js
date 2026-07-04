@@ -11,10 +11,15 @@ const STATE = {
 };
 
 function proxyCandidates(url) {
+  const encoded = encodeURIComponent(url);
   return [
     url,
+    // corsproxy.io 现要求 ?url=<encoded> 查询参数形式（旧的路径式已弃用）
+    `https://corsproxy.io/?url=${encoded}`,
+    // allorigins 稳定兜底，raw 端点直接透传原始响应体
+    `https://api.allorigins.win/raw?url=${encoded}`,
+    // isomorphic-git 代理（路径式，保留为最后兜底）
     `https://cors.isomorphic-git.org/${url}`,
-    `https://corsproxy.io/${url}`,
   ];
 }
 
